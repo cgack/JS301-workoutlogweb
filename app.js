@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var WorkoutLog = (function($, undefined) {
-		var API_BASE = "http://localhost:3000/api/";
+		var API_BASE = "//workoutapi-1150-cgack.herokuapp.com/api/";
 
 		var setAuthHeader = function(sessionToken) {
 			window.localStorage.setItem("sessionToken", sessionToken);
