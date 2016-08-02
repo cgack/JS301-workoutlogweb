@@ -10,8 +10,10 @@ $(function() {
 		sendChat: function() {
 			WorkoutLog.socket.emit("chat-message", {
 				username: WorkoutLog.username,
-				message: $("#msg").val()
+				message: " says " + $("#msg").val()
 			});
+
+			$("#msg").val("");
 		},
 		setFeed: function() {
 			var feed = WorkoutLog.feed;
