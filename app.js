@@ -13,6 +13,13 @@ $(document).ready(function() {
 					"Authorization": sessionToken	
 				}
 			});
+
+			$.ajax({
+				type: "GET",
+				url: API_BASE + "login"
+			}).then(function(data) {
+				WorkoutLog.username = data;
+			});
 		};
 
 		return {
@@ -39,6 +46,9 @@ $(document).ready(function() {
 		if (target === "#history") {
 			WorkoutLog.log.setHistory();
 		}
+		if (target === "#feed") {
+			WorkoutLog.setFeed();
+		}
 	});
 
   // bind enter key
@@ -60,22 +70,14 @@ $(document).ready(function() {
 
 	window.WorkoutLog = WorkoutLog;
 
+	WorkoutLog.socket = io.connect("http://localhost:3000");
 
-	
-		// $("#testAPI").on("click", function() {
-	// 	console.log("its working");
+	WorkoutLog.socket.on("new log", function(data) {
+		WorkoutLog.addFeedItem(data);
+	});
 
-	// 	var test = $.ajax({
-	// 		type: "GET",
-	// 		url: "http://localhost:3000/api/test"
-	// 	});
+	WorkoutLog.socket.on("chat-message", function(data) {
+		WorkoutLog.addFeedItem(data);
+	});
 
-	// 	test.done(function(data) {
-	// 		console.log(data);
-	// 	});
-
-	// 	test.fail(function() {
-	// 		console.log("oh noes!!!");
-	// 	});
-	// });
 });
